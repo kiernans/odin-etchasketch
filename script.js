@@ -21,25 +21,38 @@ let removeChildren = (height, width) => {
 let buildGrid = (height, width, scale) => {
     for(let i = 0; i < height * width; i++) {
         const box = document.createElement('div');
-        box.classList = 'box';
+        box.classList.add('box');
         box.style.height = `${scale}px`;
         box.style.width = `${scale}px`;
         container.appendChild(box);
     }
 };
 
+let setDrawing = () => {
+    const boxes = document.querySelectorAll('.box');
+    boxes.forEach((box) => {
+        box.onmouseover = () => {
+            box.classList.add('active');
+        }
+    });
+};
 
 
 buildGrid(BOXES, BOXES, BOXSCALE);
+setDrawing();
 
-let slider = document.getElementById('slider');
+
+const slider = document.getElementById('slider');
 slider.onchange = () => {
     const newHeight = slider.value;
     const newWidth = slider.value;
     const scale = GRIDSIZE / slider.value;
     removeChildren(BOXES, BOXES);
     buildGrid(newHeight, newWidth, scale);
+
+    setDrawing();
 };
+
 
     
 
