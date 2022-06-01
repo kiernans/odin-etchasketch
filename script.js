@@ -1,44 +1,48 @@
+const BOXES = 16;
+const LIMIT = 100;
+const GRIDSIZE = 700;
+const BOXSCALE = GRIDSIZE/BOXES;
+
 const container = document.querySelector('.container');
 container.innerHTML = '';
-const HEIGHT = 16;
-const WIDTH = 16;
-const LIMIT = 100;
-const GRIDSIZE = 960;
+container.style.height = `${GRIDSIZE}px`;
+container.style.width = `${GRIDSIZE}px`;
 
-for(let i = 0; i < HEIGHT * WIDTH; i++) {
-    const box = document.createElement('div');
-    box.classList = 'box';
-    container.appendChild(box);
-}
-
-const button = document.querySelector('.change');
-button.addEventListener('click', () => {
-    let newSize = prompt('How many boxes?');
-    if((typeof newSize === 'number')) newSize = 16;
-    if(newSize > LIMIT) newSize = LIMIT;
-    if(newSize < 1) newSize = 1;
-    const newHeight = newSize;
-    const newWidth = newSize;
-    const scale = GRIDSIZE / newSize;
-
-    for(let i = 0; i < HEIGHT * WIDTH; i++){
+let removeChildren = (height, width) => {
+    for(let i = 0; i < height*width; i++){
         var child = container.lastElementChild; 
         while (child) {
             container.removeChild(child);
             child = container.lastElementChild;
         }
     }
+};
 
-    for(let i = 0; i < newHeight * newWidth; i++) {
+let buildGrid = (height, width, scale) => {
+    for(let i = 0; i < height * width; i++) {
         const box = document.createElement('div');
         box.classList = 'box';
         box.style.height = `${scale}px`;
         box.style.width = `${scale}px`;
         container.appendChild(box);
     }
-    
+};
+
+
+
+buildGrid(BOXES, BOXES, BOXSCALE);
+
+let slider = document.getElementById('slider');
+slider.onchange = () => {
+    const newHeight = slider.value;
+    const newWidth = slider.value;
+    const scale = GRIDSIZE / slider.value;
+    removeChildren(BOXES, BOXES);
+    buildGrid(newHeight, newWidth, scale);
+};
+
     
 
-});
+
 
 
