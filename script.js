@@ -37,21 +37,36 @@ let setDrawing = () => {
     });
 };
 
+let setSlider = () => {
+    const slider = document.getElementById('slider');
+    slider.onchange = () => {
+        const newHeight = slider.value;
+        const newWidth = slider.value;
+        const scale = GRIDSIZE / slider.value;
+        removeChildren(BOXES, BOXES);
+        buildGrid(newHeight, newWidth, scale);
+
+        setDrawing();
+    };
+};
+
+let doClear = () => {
+    const button = document.querySelector('button');
+    button.addEventListener('click', () => {
+        const boxes = document.querySelectorAll('.box');
+        boxes.forEach((box) => {
+                box.classList.remove('active');
+        });
+    });
+};
+
 
 buildGrid(BOXES, BOXES, BOXSCALE);
 setDrawing();
+setSlider();
+doClear();
 
 
-const slider = document.getElementById('slider');
-slider.onchange = () => {
-    const newHeight = slider.value;
-    const newWidth = slider.value;
-    const scale = GRIDSIZE / slider.value;
-    removeChildren(BOXES, BOXES);
-    buildGrid(newHeight, newWidth, scale);
-
-    setDrawing();
-};
 
 
     
